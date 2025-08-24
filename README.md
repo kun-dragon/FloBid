@@ -102,4 +102,4 @@ _SUPPORTED_OPS: Dict[str, Callable] = {
 ```
 
 ## Limitations ##
-It only supports serval operators.
+It only supports several operators.

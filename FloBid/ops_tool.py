@@ -82,6 +82,7 @@ _IGNORED_OPS: Set[str] = {
     'aten::randn',
     'aten::lift_fresh_copy',
     'aten::unbind.int',
+    'aten::max_pool2d_with_indices_backward',
 
     # logical operation add by zkl
     'aten::sort',
@@ -91,6 +92,7 @@ _IGNORED_OPS: Set[str] = {
     'aten::where.self',
     'aten::ge.Scalar',
     'aten::threshold_backward',
+    'aten::max_pool2d_with_indices',
 }
 
 _PYTHON_IGNORED_OPS: Set = {
@@ -626,9 +628,16 @@ def sigmoid_backward_ops_counter(inputs: List[Any]) -> int:
 
     return flops
 
+def div_Scalar_ops_counter(inputs: List[Any]) -> int:
+    input_shape = np.array(inputs[0].meta['val'].shape, dtype=np.int64)
+    flops= input_shape.prod()
+
+    return flops
+
 _SUPPORTED_OPS: Dict[str, Callable] = {
     "aten::convolution": conv_ops_counter,
     'aten::div.Tensor': div_tesnor_ops_counter,
+    'aten::div.Scalar': div_Scalar_ops_counter,
     'aten::addmm': addmm_ops_counter,
     'aten::sum.dim_IntList': sum_dim_IntList_ops_counter,
     'aten::sigmoid': sigmoid_ops_counter,

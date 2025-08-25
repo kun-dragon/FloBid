@@ -81,6 +81,7 @@ _IGNORED_OPS: Set[str] = {
     'aten::bernoulli.p',
     'aten::randn',
     'aten::lift_fresh_copy',
+    'aten::unbind.int',
 
     # logical operation add by zkl
     'aten::sort',
